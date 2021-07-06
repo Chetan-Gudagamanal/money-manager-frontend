@@ -31,7 +31,7 @@ function App() {
           <Route path="/year">
             <YearData/>
           </Route>
-          <Route path="/last12">
+          <Route path="/last12hours">
             <Last12HourData/>
           </Route>
           <Route path="/allhistory">

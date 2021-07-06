@@ -101,7 +101,6 @@ inputData.forEach((ele)=>{
       </Table>
       <div className={classes.seeMore}>
         <Link color="primary" href="#" onClick={preventDefault}>
-          See more orders
         </Link>
       </div>
     </React.Fragment>
