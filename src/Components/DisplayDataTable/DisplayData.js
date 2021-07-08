@@ -1,45 +1,113 @@
+
 import React from 'react';
-import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableFooter from '@material-ui/core/TableFooter';
+import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import Title from '../Charts/Title';
+import Paper from '@material-ui/core/Paper';
+import IconButton from '@material-ui/core/IconButton';
+import FirstPageIcon from '@material-ui/icons/FirstPage';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import LastPageIcon from '@material-ui/icons/LastPage';
 import {Container} from "@material-ui/core"
+import TableHead from '@material-ui/core/TableHead';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
-// Generate Order Data
-// function createData(id, date, name, shipTo, paymentMethod, amount) {
-//   return { id, date, name, shipTo, paymentMethod, amount };
-// }
-// const rows = [
-//   createData(0, '16 Mar, 2019', '0:00', 'Elvis Presley', 'Tupelo, MS', 'VISA ⠀•••• 3719', 312.44),
-//   createData(1, '16 Mar, 2019', '0:00', 'Paul McCartney', 'London, UK', 'VISA ⠀•••• 2574', 866.99),
-//   createData(2, '16 Mar, 2019', '0:00', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
-//   createData(3, '16 Mar, 2019', '0:00', 'Michael Jackson', 'Gary, IN', 'AMEX ⠀•••• 2000', 654.39),
-//   createData(4, '15 Mar, 2019', '0:00', 'Bruce Springsteen', 'Long Branch, NJ', 'VISA ⠀•••• 5919', 212.79),
-// ];
-
-function preventDefault(event) {
-  event.preventDefault();
-}
-
-const useStyles = makeStyles((theme) => ({
-  seeMore: {
-    marginTop: theme.spacing(3),
+const useStyles1 = makeStyles((theme) => ({
+  root: {
+    flexShrink: 0,
+    marginLeft: theme.spacing(2.5),
+    backgroundColor: fade(theme.palette.background.paper,0.4)
   },
 }));
 
-export default function DisplayData({inputData}) {
+function TablePaginationActions(props) {
+  const classes = useStyles1();
+  const theme = useTheme();
+  const { count, page, rowsPerPage, onPageChange } = props;
 
-  function createData(id,type, date, time, description, Category, division, amount) {
-    return { id,type, date, time, description, Category, division, amount };
+  const handleFirstPageButtonClick = (event) => {
+    onPageChange(event, 0);
+  };
+
+  const handleBackButtonClick = (event) => {
+    onPageChange(event, page - 1);
+  };
+
+  const handleNextButtonClick = (event) => {
+    onPageChange(event, page + 1);
+  };
+
+  const handleLastPageButtonClick = (event) => {
+    onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+  };
+
+  return (
+    <div className={classes.root}>
+      <IconButton
+        onClick={handleFirstPageButtonClick}
+        disabled={page === 0}
+        aria-label="first page"
+      >
+        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+      </IconButton>
+      <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
+        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+      </IconButton>
+      <IconButton
+        onClick={handleNextButtonClick}
+        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+        aria-label="next page"
+      >
+        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+      </IconButton>
+      <IconButton
+        onClick={handleLastPageButtonClick}
+        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+        aria-label="last page"
+      >
+        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+      </IconButton>
+    </div>
+  );
 }
 
+TablePaginationActions.propTypes = {
+  count: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+  page: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+};
 
-console.log(inputData)
-let rows=[];
+// function createData(name, calories, fat) {
+//   return { name, calories, fat };
+// }
+
+// const rows = [
+//   createData('Cupcake', 305, 3.7),
+//   createData('Donut', 452, 25.0),
+// ].sort((a, b) => (a.calories < b.calories ? -1 : 1));
+
+const useStyles2 = makeStyles({
+  table: {
+    minWidth: 500,
+    // color: 'rgba(255, 255, 255, 0.5)',
+  },
+});
+
+
+export default function DisplayData({inputData}) {
+  function createData(id,type, date, time, description, Category, division, amount) {
+    return { id,type, date, time, description, Category, division, amount };
+  }
+
+  let rows=[];
 const getCustomDate=(isoString)=>{
   let date=new Date(isoString).getDate()
   let month=new Date(isoString).getMonth()
@@ -65,45 +133,95 @@ inputData.forEach((ele)=>{
       ele.amount
     ))
 })
-  
-  console.log(rows)
+  const classes = useStyles2();
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const classes = useStyles();
+
+
+
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   return (
-      <Container>
-    <React.Fragment>
-      <Title>Income/Expense</Title>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>Type</TableCell>
-            <TableCell>Date</TableCell>
-            <TableCell>Time</TableCell>
-            <TableCell>Description</TableCell>
-            <TableCell>Category</TableCell>
-            <TableCell>Division</TableCell>
-            <TableCell align="right">Amount(In Rupees)</TableCell>
-          </TableRow>
-        </TableHead>
+    <Container>
+    <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="custom pagination table">
+      <TableHead>
+           <TableRow>
+             <TableCell style={{fontWeight:"bold"}}>Type</TableCell>
+             <TableCell style={{fontWeight:"bold"}}>Date</TableCell>
+             <TableCell style={{fontWeight:"bold"}}>Time</TableCell>
+             <TableCell style={{fontWeight:"bold"}}>Description</TableCell>
+             <TableCell style={{fontWeight:"bold"}}>Category</TableCell>
+             <TableCell style={{fontWeight:"bold"}}>Division</TableCell>
+             <TableCell style={{fontWeight:"bold"}}>Amount(In Rupees)</TableCell>
+           </TableRow>
+         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {(rowsPerPage > 0
+            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : rows
+          ).map((row) => (
             <TableRow key={row._id}>
-              <TableCell>{row.type}</TableCell>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.time}</TableCell>
-              <TableCell>{row.description}</TableCell>
-              <TableCell>{row.Category}</TableCell>
-              <TableCell>{row.division}</TableCell>
-              <TableCell align="right">{row.amount}</TableCell>
+              <TableCell >
+                {row.type}
+              </TableCell>
+              <TableCell >
+                {row.date}
+              </TableCell>
+              <TableCell >
+                {row.time}
+              </TableCell>
+              <TableCell >
+                {row.description}
+              </TableCell>
+              <TableCell >
+                {row.Category}
+              </TableCell>
+              <TableCell >
+                {row.division}
+              </TableCell>
+              <TableCell >
+                {row.amount}
+              </TableCell>
             </TableRow>
           ))}
+
+          {emptyRows > 0 && (
+            <TableRow style={{ height: 53 * emptyRows }}>
+              <TableCell colSpan={6} />
+            </TableRow>
+          )}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+              colSpan={3}
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              SelectProps={{
+                inputProps: { 'aria-label': 'rows per page' },
+                native: true,
+              }}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              ActionsComponent={TablePaginationActions}
+            />
+          </TableRow>
+        </TableFooter>
       </Table>
-      <div className={classes.seeMore}>
-        <Link color="primary" href="#" onClick={preventDefault}>
-        </Link>
-      </div>
-    </React.Fragment>
+    </TableContainer>
     </Container>
   );
 }

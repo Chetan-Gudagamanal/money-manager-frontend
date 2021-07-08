@@ -1,21 +1,61 @@
+
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 import {Link, useHistory} from "react-router-dom"
 import {Container} from "@material-ui/core"
-import { makeStyles } from '@material-ui/core/styles';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
-import AddDataModel from "./AddDataModel/AddDataModel"
-const useStyles = makeStyles({
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+    
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`scrollable-auto-tabpanel-${index}`}
+      aria-labelledby={`scrollable-auto-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `scrollable-auto-tab-${index}`,
+    'aria-controls': `scrollable-auto-tabpanel-${index}`,
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    width: '100%',
+    backgroundColor: fade(theme.palette.background.paper,0.4)
   },
-});
+}));
 
 export default function NavTabs() {
   const classes = useStyles();
-  const [value, setValue] = React.useState(2);
+  const [value, setValue] = React.useState(0);
 
   const history=useHistory()
 
@@ -25,31 +65,42 @@ export default function NavTabs() {
 
   return (
     <Container>
-    <Paper square className={classes.root}>
-      <Tabs
-        value={value}
-        indicatorColor="primary"
-        textColor="primary"
-        onChange={handleChange}
-        aria-label="disabled tabs example"
-      >
-        {/* <Link to="/week"><Tab label="Week Report" /></Link>
-        <Link to="/month"><Tab label="Month Report" /></Link>
-        <Link to="/year"><Tab label="Year Report" /></Link>
-        <Link to="/last12hours"><Tab label="Last 12 Hours" /></Link>
-        <Link to="/allhistory"><Tab label="All History" /></Link> */}
+    <div className={classes.root}>
+      <AppBar position="static" color="default">
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor="primary"
+          textColor="primary"
+          variant="scrollable"
+          scrollButtons="auto"
+          aria-label="scrollable auto tabs example"
+        >
+          <Tab label="Week Report" {...a11yProps(0)} onClick={()=>{history.push("/week")}}/>
+          <Tab label="Month Report" {...a11yProps(1)} onClick={()=>{history.push("/month")}}/>
+          <Tab label="Year Report" {...a11yProps(2)} onClick={()=>{history.push("/year")}}/>
+          <Tab label="Last 12 Hours" {...a11yProps(3)} onClick={()=>{history.push("/last12hours")}}/>
+          <Tab label="All History" {...a11yProps(4)} onClick={()=>{history.push("/allhistory")}}/>
+        </Tabs>
+      </AppBar>
 
-        <Tab label="Week Report" onClick={()=>{history.push("/week")}}/>
-        <Tab label="Month Report" onClick={()=>{history.push("/month")}}/>
-        <Tab label="Year Report" onClick={()=>{history.push("/year")}}/>
-        <Tab label="Last 12 Hours" onClick={()=>{history.push("/last12hours")}}/>
-        <Tab label="All History" onClick={()=>{history.push("/allhistory")}}/>
-        
-        <span style={{marginLeft:"auto"}}>
-        <AddDataModel/>
-        </span>
-      </Tabs>
-    </Paper>
+
+      <TabPanel value={value} index={0} >
+        Week Report
+      </TabPanel>
+      <TabPanel value={value} index={1} >
+        Month Report
+      </TabPanel>
+      <TabPanel value={value} index={2} >
+        Year Report
+      </TabPanel>
+      <TabPanel value={value} index={3} >
+        Last 12 Hours
+      </TabPanel>
+      <TabPanel value={value} index={4} >
+        All History
+      </TabPanel>
+    </div>
     </Container>
   );
 }
