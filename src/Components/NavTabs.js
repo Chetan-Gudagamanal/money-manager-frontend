@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,6 +9,7 @@ import Box from '@material-ui/core/Box';
 import {Link, useHistory} from "react-router-dom"
 import {Container} from "@material-ui/core"
 import { fade } from '@material-ui/core/styles/colorManipulator';
+import AddDataModel from "./AddDataModel/AddDataModel"
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -100,7 +100,12 @@ export default function NavTabs() {
       <TabPanel value={value} index={4} >
         All History
       </TabPanel>
+      <span style={{marginLeft:"auto"}}>
+         <AddDataModel/>
+      </span>
     </div>
     </Container>
   );
 }
+
+
