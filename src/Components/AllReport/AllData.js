@@ -18,7 +18,7 @@ export default function WeekData(){
     return(
         <>
         <DisplayData inputData={allData}/>
-        {console.log(allData)}
+        
         </>
     )
 }

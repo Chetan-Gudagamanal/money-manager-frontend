@@ -18,7 +18,7 @@ export default function YearData(){
     return(
         <>
         <DisplayData inputData={yearData}/>
-        {console.log(yearData)}
+        
         </>
     )
 }

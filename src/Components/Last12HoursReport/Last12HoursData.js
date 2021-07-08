@@ -18,7 +18,7 @@ export default function Last12HoursData(){
     return(
         <>
         <DisplayData inputData={last12HoursData}/>
-        {console.log(last12HoursData)}
+        
         </>
     )
 }
