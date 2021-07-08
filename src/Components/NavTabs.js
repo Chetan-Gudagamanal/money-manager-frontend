@@ -45,6 +45,7 @@ function a11yProps(index) {
   };
 }
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -68,6 +69,7 @@ export default function NavTabs() {
     <div className={classes.root}>
       <AppBar position="static" color="default">
         <Tabs
+          
           value={value}
           onChange={handleChange}
           indicatorColor="primary"
@@ -76,11 +78,11 @@ export default function NavTabs() {
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
-          <Tab label="Week Report" {...a11yProps(0)} onClick={()=>{history.push("/week")}}/>
-          <Tab label="Month Report" {...a11yProps(1)} onClick={()=>{history.push("/month")}}/>
-          <Tab label="Year Report" {...a11yProps(2)} onClick={()=>{history.push("/year")}}/>
-          <Tab label="Last 12 Hours" {...a11yProps(3)} onClick={()=>{history.push("/last12hours")}}/>
-          <Tab label="All History" {...a11yProps(4)} onClick={()=>{history.push("/allhistory")}}/>
+          <Tab style={{ fontSize: "0.7em", maxWidth:"10%", fontWeight:"bold"}} label="Week Report" {...a11yProps(0)} onClick={()=>{history.push("/week")}}/>
+          <Tab style={{ fontSize: "0.7em", maxWidth:"10%", fontWeight:"bold" }} label="Month Report" {...a11yProps(1)} onClick={()=>{history.push("/month")}}/>
+          <Tab style={{ fontSize: "0.7em", maxWidth:"10%", fontWeight:"bold" }} label="Year Report" {...a11yProps(2)} onClick={()=>{history.push("/year")}}/>
+          <Tab style={{ fontSize: "0.7em", maxWidth:"10%", fontWeight:"bold" }} label="Last 12 Hours" {...a11yProps(3)} onClick={()=>{history.push("/last12hours")}}/>
+          <Tab style={{ fontSize: "0.7em", maxWidth:"10%", fontWeight:"bold" }} label="All History" {...a11yProps(4)} onClick={()=>{history.push("/allhistory")}}/>
         </Tabs>
       </AppBar>
 

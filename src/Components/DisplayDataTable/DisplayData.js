@@ -96,8 +96,9 @@ TablePaginationActions.propTypes = {
 
 const useStyles2 = makeStyles({
   table: {
-    minWidth: 500,
-    // color: 'rgba(255, 255, 255, 0.5)',
+    minWidth: 400,
+    backgroundColor: 'rgba(0, 0, 255, 0.1)',
+    // backgroundColor: fade(theme.palette.background.paper,0.4)
   },
 });
 
