@@ -67,7 +67,7 @@ export default function NavTabs() {
   return (
     <Container>
     <div className={classes.root}>
-      <AppBar position="static" color="default">
+      <AppBar position="static" color="secondary">
         <Tabs
           
           value={value}

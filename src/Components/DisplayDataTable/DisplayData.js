@@ -30,22 +30,22 @@ const useStyles1 = makeStyles((theme) => ({
 function TablePaginationActions(props) {
   const classes = useStyles1();
   const theme = useTheme();
-  const { count, page, rowsPerPage, onPageChange } = props;
+  const { count, page, rowsPerPage, onChangePage } = props;
 
   const handleFirstPageButtonClick = (event) => {
-    onPageChange(event, 0);
+    onChangePage(event, 0);
   };
 
   const handleBackButtonClick = (event) => {
-    onPageChange(event, page - 1);
+    onChangePage(event, page - 1);
   };
 
   const handleNextButtonClick = (event) => {
-    onPageChange(event, page + 1);
+    onChangePage(event, page + 1);
   };
 
   const handleLastPageButtonClick = (event) => {
-    onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+    onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
   };
 
   return (
@@ -80,7 +80,7 @@ function TablePaginationActions(props) {
 
 TablePaginationActions.propTypes = {
   count: PropTypes.number.isRequired,
-  onPageChange: PropTypes.func.isRequired,
+  onChangePage: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
 };
@@ -104,6 +104,10 @@ const useStyles2 = makeStyles({
 
 
 export default function DisplayData({inputData}) {
+  const classes = useStyles2();
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
   function createData(id,type, date, time, description, Category, division, amount) {
     return { id,type, date, time, description, Category, division, amount };
   }
@@ -134,9 +138,9 @@ inputData.forEach((ele)=>{
       ele.amount
     ))
 })
-  const classes = useStyles2();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  // const classes = useStyles2();
+  // const [page, setPage] = React.useState(0);
+  // const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
 
 
@@ -215,8 +219,8 @@ inputData.forEach((ele)=>{
                 inputProps: { 'aria-label': 'rows per page' },
                 native: true,
               }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
               ActionsComponent={TablePaginationActions}
             />
           </TableRow>
@@ -226,3 +230,8 @@ inputData.forEach((ele)=>{
     </Container>
   );
 }
+
+
+
+
+

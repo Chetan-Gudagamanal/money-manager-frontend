@@ -90,7 +90,7 @@ export default function AddData({type}) {
           <Select
             label="category"
             register={register}
-            options={["fuel", "movie", "food", "loan", "medical", "others"]}
+            options={type=="Income"?["Salary","Personal","Business","Agriculture","Others"]:["fuel", "movie", "food", "loan", "medical", "others"]}
           />
           <Select
             label="division"
