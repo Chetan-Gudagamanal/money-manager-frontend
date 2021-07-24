@@ -34,3 +34,14 @@
     width: 100%;
     font-weight: lighter;
   }
+
+  .MyForm input[type="submit"]:active {
+    transition: 0.3s all;
+    transform: translateY(3px);
+    border: 1px solid transparent;
+    opacity: 0.8;
+  }
+  
+  .MyForm input[type="submit"]:hover {
+    background: #bf1650;
+  }

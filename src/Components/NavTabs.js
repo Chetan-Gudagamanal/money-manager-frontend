@@ -78,27 +78,28 @@ export default function NavTabs() {
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
-          <Tab style={{ fontSize: "0.7em", maxWidth:"10%", fontWeight:"bold"}} label="Week Report" {...a11yProps(0)} onClick={()=>{history.push("/week")}}/>
-          <Tab style={{ fontSize: "0.7em", maxWidth:"10%", fontWeight:"bold" }} label="Month Report" {...a11yProps(1)} onClick={()=>{history.push("/month")}}/>
-          <Tab style={{ fontSize: "0.7em", maxWidth:"10%", fontWeight:"bold" }} label="Year Report" {...a11yProps(2)} onClick={()=>{history.push("/year")}}/>
-          <Tab style={{ fontSize: "0.7em", maxWidth:"10%", fontWeight:"bold" }} label="Last 12 Hours" {...a11yProps(3)} onClick={()=>{history.push("/last12hours")}}/>
+          <Tab style={{ fontSize: "0.7em", maxWidth:"10%", fontWeight:"bold" }} label="Last 12 Hours" {...a11yProps(0)} onClick={()=>{history.push("/last12hours")}}/>
+          <Tab style={{ fontSize: "0.7em", maxWidth:"10%", fontWeight:"bold"}} label="Week Report" {...a11yProps(1)} onClick={()=>{history.push("/week")}}/>
+          <Tab style={{ fontSize: "0.7em", maxWidth:"10%", fontWeight:"bold" }} label="Month Report" {...a11yProps(2)} onClick={()=>{history.push("/month")}}/>
+          <Tab style={{ fontSize: "0.7em", maxWidth:"10%", fontWeight:"bold" }} label="Year Report" {...a11yProps(3)} onClick={()=>{history.push("/year")}}/>
+          
           <Tab style={{ fontSize: "0.7em", maxWidth:"10%", fontWeight:"bold" }} label="All History" {...a11yProps(4)} onClick={()=>{history.push("/allhistory")}}/>
         </Tabs>
       </AppBar>
 
-
       <TabPanel value={value} index={0} >
-        Week Report
-      </TabPanel>
-      <TabPanel value={value} index={1} >
-        Month Report
-      </TabPanel>
-      <TabPanel value={value} index={2} >
-        Year Report
-      </TabPanel>
-      <TabPanel value={value} index={3} >
         Last 12 Hours
       </TabPanel>
+      <TabPanel value={value} index={1} >
+        Week Report
+      </TabPanel>
+      <TabPanel value={value} index={2} >
+        Month Report
+      </TabPanel>
+      <TabPanel value={value} index={3} >
+        Year Report
+      </TabPanel>
+      
       <TabPanel value={value} index={4} >
         All History
       </TabPanel>
