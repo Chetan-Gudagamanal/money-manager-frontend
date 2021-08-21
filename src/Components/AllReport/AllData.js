@@ -39,7 +39,10 @@ export default function WeekData(){
     }
     return(
         <>
-        <DisplayData inputData={allData}/>
+        <br/>
+        {allData.length?
+        <DisplayData inputData={allData}/>:
+        <p style={{display:'flex',justifyContent:'center'}}>Nothing to display</p>}
         
         </>
     )

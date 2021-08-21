@@ -40,7 +40,11 @@ export default function Last12HoursData(){
     }
     return(
         <>
-        <DisplayData inputData={last12HoursData}/>
+        <br/>
+        {last12HoursData.length?
+        <DisplayData inputData={last12HoursData}/>:
+        <p style={{display:'flex',justifyContent:'center'}}>Nothing to display</p>}
+        {/* <DisplayData inputData={last12HoursData}/> */}
         
         </>
     )

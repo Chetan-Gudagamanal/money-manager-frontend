@@ -39,7 +39,11 @@ export default function YearData(){
     }
     return(
         <>
-        <DisplayData inputData={yearData}/>
+        <br/>
+        {yearData.length?
+        <DisplayData inputData={yearData}/>:
+        <p style={{display:'flex',justifyContent:'center'}}>Nothing to display</p>}
+        {/* <DisplayData inputData={yearData}/> */}
         
         </>
     )

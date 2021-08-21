@@ -41,7 +41,11 @@ export default function WeekData(){
     }
     return(
         <>
-        <DisplayData inputData={weekData}/>
+        <br/>
+        {weekData.length?
+        <DisplayData inputData={weekData}/>:
+        <p style={{display:'flex',justifyContent:'center'}}>Nothing to display</p>}
+        {/* <DisplayData inputData={weekData}/> */}
         
         </>
     )
