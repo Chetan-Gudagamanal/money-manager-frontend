@@ -1,1 +1,1 @@
-export const backend_url = `money-manager-backend-sooty.vercel.app`;
+export const backend_url = `https://money-manager-backend-sooty.vercel.app`;
