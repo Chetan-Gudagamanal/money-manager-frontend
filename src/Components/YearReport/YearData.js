@@ -1,50 +1,56 @@
-import { useEffect, useState } from "react"
-import DisplayData from "../DisplayDataTable/DisplayData"
-import { makeStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { useEffect, useState } from "react";
+import DisplayData from "../DisplayDataTable/DisplayData";
+import { makeStyles } from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { url } from "../../constants";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    '& > * + *': {
+    display: "flex",
+    "& > * + *": {
       marginLeft: theme.spacing(2),
     },
   },
 }));
 
-
-export default function YearData(){
-    const [yearData,setYearData]=useState([])
-    const [loading,setLoading]=useState(true)
-    useEffect(()=>{
-        getYearData()
-    },[])
-    async function getYearData(){
-        fetch("https://money-manager-backend-server.herokuapp.com/yearReport", {
-          method: "GET",
-        })
-        .then((res) => res.json())
-        .then((res) => {
-            setYearData(res);
-            setLoading(false)
-        });
-    }
-    const classes = useStyles();
-    if(loading){
-        return (
-            <div className={classes.root} style={{display:'flex',justifyContent:'center'}}>
-              <CircularProgress />
-            </div>
-        );
-    }
-    return(
-        <>
-        <br/>
-        {yearData.length?
-        <DisplayData inputData={yearData}/>:
-        <p style={{display:'flex',justifyContent:'center'}}>Nothing to display</p>}
-        {/* <DisplayData inputData={yearData}/> */}
-        
-        </>
-    )
+export default function YearData() {
+  const [yearData, setYearData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    getYearData();
+  }, []);
+  async function getYearData() {
+    fetch(`${url}/yearReport`, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setYearData(res);
+        setLoading(false);
+      });
+  }
+  const classes = useStyles();
+  if (loading) {
+    return (
+      <div
+        className={classes.root}
+        style={{ display: "flex", justifyContent: "center" }}
+      >
+        <CircularProgress />
+      </div>
+    );
+  }
+  return (
+    <>
+      <br />
+      {yearData.length ? (
+        <DisplayData inputData={yearData} />
+      ) : (
+        <p style={{ display: "flex", justifyContent: "center" }}>
+          Nothing to display
+        </p>
+      )}
+      {/* <DisplayData inputData={yearData}/> */}
+    </>
+  );
 }

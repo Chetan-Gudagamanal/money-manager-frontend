@@ -1,47 +1,52 @@
-
 import "./AddDataForm.css";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import { url } from "../../constants";
 
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
   },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     width: "100%",
-    backgroundColor: "white"
-  }
+    backgroundColor: "white",
+  },
 }));
 
-export default function AddData({type}) {
+export default function AddData({ type }) {
   const {
     register,
     control,
     formState: { errors },
-    handleSubmit
+    handleSubmit,
   } = useForm();
 
   const [dateTime, setDateTime] = useState("2021-06-06T10:30");
 
   const onSubmit = (data) => {
-    fetch("https://money-manager-backend-server.herokuapp.com/addData", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ ...data, date: new Date(dateTime).toISOString(),type: type, amount:parseFloat(data.amount) })
-        })
-        .then((res) => res.json())
-        .then((res) => {
-          if(res._id){
-            alert("User data added successfully")
-          }
+    fetch(`${url}/addData`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...data,
+        date: new Date(dateTime).toISOString(),
+        type: type,
+        amount: parseFloat(data.amount),
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res._id) {
+          alert("User data added successfully");
+        }
       });
     //   async function getMonthData(){
     //     fetch("http://localhost:5080/monthReport", {
@@ -62,7 +67,7 @@ export default function AddData({type}) {
       <div className="MyForm">
         <form onSubmit={handleSubmit(onSubmit)}>
           <h1>{type}</h1>
-          <hr/>
+          <hr />
           <Controller
             setDateTime={setDateTime}
             control={control}
@@ -80,24 +85,29 @@ export default function AddData({type}) {
                 // defaultValue={Date.now()}
                 className={classes.textField}
                 InputLabelProps={{
-                  shrink: true
+                  shrink: true,
                 }}
               />
-             )}
+            )}
           />
-          
-          <br/><br/>
+
+          <br />
+          <br />
           <Select
             label="category"
             register={register}
-            options={type=="Income"?["Salary","Personal","Business","Agriculture","Others"]:["fuel", "movie", "food", "loan", "medical", "others"]}
+            options={
+              type == "Income"
+                ? ["Salary", "Personal", "Business", "Agriculture", "Others"]
+                : ["fuel", "movie", "food", "loan", "medical", "others"]
+            }
           />
           <Select
             label="division"
             register={register}
             options={["Office", "Personal"]}
           />
-          <br/>
+          <br />
           <CustomNameInput
             label="description"
             register={register}
@@ -124,7 +134,7 @@ function CustomNameInput({ label, register, errors }) {
         placeholder={label}
         {...register(label, {
           required: true,
-          minLength: 3
+          minLength: 3,
         })}
       />
       {errors[label] && errors[label].type === "required" && (
@@ -148,7 +158,7 @@ function CustomNumberInput({ label, register, errors }) {
         {...register(label, {
           required: true,
           minLength: 2,
-          pattern: /\d+/
+          pattern: /\d+/,
         })}
       />
       {errors[label] && errors[label].type === "required" && (
@@ -174,7 +184,8 @@ function Select({ register, options, label, ...rest }) {
         {options.map((value) => (
           <option value={value}>{value}</option>
         ))}
-      </select>&ensp;&ensp;
+      </select>
+      &ensp;&ensp;
     </>
   );
 }
