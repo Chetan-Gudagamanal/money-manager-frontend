@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import DisplayData from "../DisplayDataTable/DisplayData";
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { url } from "../../constants";
+import { backend_url } from "../../constants";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,7 +20,7 @@ export default function YearData() {
     getYearData();
   }, []);
   async function getYearData() {
-    fetch(`${url}/yearReport`, {
+    fetch(`${backend_url}/yearReport`, {
       method: "GET",
     })
       .then((res) => res.json())

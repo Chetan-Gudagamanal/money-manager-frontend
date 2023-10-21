@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import DisplayData from "../DisplayDataTable/DisplayData";
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { url } from "../../constants";
+import { backend_url } from "../../constants";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,7 +23,7 @@ export default function WeekData() {
     // const rawData=fetch("http://localhost:5080/weekReport",{METHOD:"GET"})
     // const jsonData=await rawData.json()
     // .then(res=>setWeekData(jsonData))
-    fetch(`${url}/weekReport`, {
+    fetch(`${backend_url}/weekReport`, {
       method: "GET",
     })
       .then((res) => res.json())

@@ -3,7 +3,7 @@ import DisplayData from "../DisplayDataTable/DisplayData";
 
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { url } from "../../constants";
+import { backend_url } from "../../constants";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,7 +21,7 @@ export default function WeekData() {
     getMonthData();
   }, []);
   async function getMonthData() {
-    fetch(`${url}/monthReport`, {
+    fetch(`${backend_url}/monthReport`, {
       method: "GET",
     })
       .then((res) => res.json())

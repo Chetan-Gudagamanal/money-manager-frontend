@@ -4,7 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { url } from "../../constants";
+import { backend_url } from "../../constants";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -30,7 +30,7 @@ export default function AddData({ type }) {
   const [dateTime, setDateTime] = useState("2021-06-06T10:30");
 
   const onSubmit = (data) => {
-    fetch(`${url}/addData`, {
+    fetch(`${backend_url}/addData`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

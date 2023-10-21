@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import DisplayData from "../DisplayDataTable/DisplayData";
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { url } from "../../constants";
+import { backend_url } from "../../constants";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,7 +21,7 @@ export default function Last12HoursData() {
     getLast12HoursData();
   }, []);
   async function getLast12HoursData() {
-    fetch(`${url}/last12HoursReport`, {
+    fetch(`${backend_url}/last12HoursReport`, {
       method: "GET",
     })
       .then((res) => res.json())
